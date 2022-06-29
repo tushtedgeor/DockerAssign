@@ -1,70 +1,13 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Project Title: Docker Assignment
+Project Description: I have tried building two docker containers within same network with reverse proxy with certain restrictions and specifications.
+Procedure: -> First container with the create react App. Installed NodeJs and npm in my directory with npx create-react-app sampApp command in the terminal.
+           ->In the next step I have pulled NGINX latest image from the docker hub. Copied or mounted the build directory to the NGINX docker container by the command: COPY ./build/usr/share/nginx/html/index.html in a dockerfile.
+           ->Then I have build the image from the dockerfile with the command: sudo docker build -t weberver, webserver being the tag of my image.
+           ->Finally, I have build my first docker container with the command: sudo docker run -it -d -p 8080:80 --name reactcontain webserver, reactconatiner being the name of my container and webserver being the image from it is being built.
+           -> For the second container, I have formed another docker file according to the given specifications, installed nginx in the base image ubuntu, and then enabled nginx to capture the clients IP in the access logs and then pointing the access and the error logs to the docker stdout/stderr respectively, exposing port 80 for the nginx webserver.
+           ->Again formed the image and then my reverse proxy second container.
+           
+           
+ Procedure to bring both the containers in the same network:- I have made a docker compose file with both my conatainers where i have protected the first container from the outside world by specifying port with 127.0.0.1:8080:80 therby restricting the access. The dockercompose file itself takes the responsibility of not only building the containers but also enables both the containers to come in the same network.
+ 
+ Procedure to make Nginx reverse proxy: The proxy_pass setting makes the Nginx reverse proxy setup to work. To setup the Nginx proxy_pass globally, I have edited the default file in NGINX sites-avaiable folder by the command: sudo nano /etc/nginx/conf.d/default.conf where i have added the location setting. Copied this Nginx default file to my second container which is to behave as the reverse proxy.
